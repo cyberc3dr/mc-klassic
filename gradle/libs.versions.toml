@@ -1,0 +1,17 @@
+[versions]
+kotlin = "2.1.0"
+ktor-version = "3.0.1"
+configurate = "4.1.2"
+
+[libraries]
+configurate-yaml = { module = "org.spongepowered:configurate-yaml", version.ref = "configurate" }
+
+kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
+
+ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor-version" }
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }
+shadow = "com.gradleup.shadow:8.3.5"
