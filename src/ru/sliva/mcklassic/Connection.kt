@@ -2,14 +2,30 @@ package ru.sliva.mcklassic
 
 import io.ktor.network.sockets.*
 import io.ktor.utils.io.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import ru.sliva.mcklassic.entity.Player
 import ru.sliva.mcklassic.protocol.*
 
-class Connection(val socket: Socket) {
+class Connection(val socket: Socket) : CoroutineScope {
+
+    override val coroutineContext
+        get() = Dispatchers.IO + exceptionHandler
+
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        throwable.printStackTrace()
+    }
 
     private var writeChannel: ByteWriteChannel? = null
 
     init {
         connections += this
+
+        launch {
+            init()
+        }
     }
 
     suspend fun init() {
@@ -23,10 +39,15 @@ class Connection(val socket: Socket) {
                     handlePacket(packet)
                 }
             } catch (e: Throwable) {
-                println("Closed")
+                close()
                 break
             }
         }
+    }
+
+    fun close() {
+        connections -= this
+        socket.close()
     }
 
     fun writeChannel() : ByteWriteChannel {
@@ -45,13 +66,14 @@ class Connection(val socket: Socket) {
                 println("Username: ${packet.username}")
                 println("Verification key: ${packet.verificationKey}")
 
+                Player(this, packet.username)
+
                 sendPacket(ServerIdentification().apply {
                     serverName = "MCKlassic"
                     serverMotd = "Welcome to MCKlassic!"
                 })
 
                 Main.world.sendWorld(this)
-
             }
             is SetBlockC2S -> {
                 println("Received SetBlockC2S packet")

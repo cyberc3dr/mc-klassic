@@ -18,11 +18,7 @@ object Main {
         val serverSocket = aSocket(selectorManager).tcp().bind(port = port)
 
         while(true) {
-            val connection = Connection(serverSocket.accept())
-
-            launch {
-                connection.init()
-            }
+            Connection(serverSocket.accept())
         }
     }
 }

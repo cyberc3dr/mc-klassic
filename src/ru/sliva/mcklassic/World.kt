@@ -40,8 +40,6 @@ class World(val width: Int, val height: Int, val depth: Int) {
         val chunks = serialize().gzipped()
 
         chunks.chunked(1024).forEachIndexed { index, it ->
-            println("sent chunk packet")
-
             connection.sendPacket(LevelDataChunk().apply {
                 length = it.size.toShort()
                 data = it.copyInto(ByteArray(1024))
@@ -51,8 +49,6 @@ class World(val width: Int, val height: Int, val depth: Int) {
             delay(500)
         }
 
-        println("sent finalize packet")
-
         connection.sendPacket(LevelFinalize().apply {
             x = width.toShort()
             y = height.toShort()
@@ -60,5 +56,11 @@ class World(val width: Int, val height: Int, val depth: Int) {
         })
     }
 
-
+    data class Location(
+        val x: Double,
+        val y: Double,
+        val z: Double,
+        val yaw: Float,
+        val pitch: Float
+    )
 }
