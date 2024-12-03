@@ -9,11 +9,9 @@ class World(val width: Int, val height: Int, val depth: Int) {
     val map = ByteArray(width * height * depth)
 
     init {
-        for(x in 0..16) {
-            for(y in 0..16) {
-                for(z in 0..16) {
-                    setBlock(x, y, z, 1)
-                }
+        for(x in 0 until width) {
+            for(z in 0 until height) {
+                setBlock(x, 0, z, 1)
             }
         }
     }
@@ -45,7 +43,7 @@ class World(val width: Int, val height: Int, val depth: Int) {
 
             connection.sendPacket(LevelDataChunk().apply {
                 length = it.size.toShort()
-                data = it
+                data = it.copyInto(ByteArray(1024))
                 percent = (index * 100 / chunks.size).toUByte()
             })
         }

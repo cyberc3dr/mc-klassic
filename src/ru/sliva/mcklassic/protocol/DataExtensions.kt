@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream
  * @return The zipped byte array.
  */
 fun ByteArray.gzipped(): ByteArray {
-    val outputStream = ByteArrayOutputStream()
+    val outputStream = ByteArrayOutputStream(size)
     java.util.zip.GZIPOutputStream(outputStream).use {
         it.write(this)
     }
@@ -22,7 +22,7 @@ fun ByteArray.gzipped(): ByteArray {
  * @return The unzipped byte array.
  */
 fun ByteArray.ungzipped(): ByteArray {
-    val outputStream = ByteArrayOutputStream()
+    val outputStream = ByteArrayOutputStream(size)
     java.util.zip.GZIPInputStream(ByteArrayInputStream(this)).use {
         it.copyTo(outputStream)
     }
