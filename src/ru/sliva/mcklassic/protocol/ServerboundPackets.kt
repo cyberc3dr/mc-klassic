@@ -14,6 +14,7 @@ class PlayerIdentificationC2S: Packet.Serverbound {
         protocolVersion = channel.readByte()
         username = channel.readString()
         verificationKey = channel.readString()
+        channel.readByte() // unused byte
     }
 
     override fun clone() = PlayerIdentificationC2S().also {
@@ -25,20 +26,20 @@ class PlayerIdentificationC2S: Packet.Serverbound {
 
 class SetBlockC2S : Packet.Serverbound {
 
-    override val packetId: UByte = 0x0eu
+    override val packetId: UByte = 0x05u
 
     var x: Short = 0
     var y: Short = 0
     var z: Short = 0
-    var mode: Byte = 0x00
-    var blockType: Byte = 0x00
+    var mode: UByte = 0x00u
+    var blockType: UByte = 0x00u
 
     override suspend fun read(channel: ByteReadChannel) {
         x = channel.readShort()
         y = channel.readShort()
         z = channel.readShort()
-        mode = channel.readByte()
-        blockType = channel.readByte()
+        mode = channel.readUByte()
+        blockType = channel.readUByte()
     }
 
     override fun clone() = SetBlockC2S().also {
@@ -55,17 +56,17 @@ class PositionAndOrientationC2S : Packet.Serverbound {
     override val packetId: UByte = 0x08u
 
     var playerID: Byte = -1
-    var x: Short = 0
-    var y: Short = 0
-    var z: Short = 0
+    var x: Double = 0.0
+    var y: Double = 0.0
+    var z: Double = 0.0
     var yaw: Byte = 0
     var pitch: Byte = 0
 
     override suspend fun read(channel: ByteReadChannel) {
         playerID = channel.readByte()
-        x = channel.readShort()
-        y = channel.readShort()
-        z = channel.readShort()
+        x = channel.readFShort()
+        y = channel.readFShort()
+        z = channel.readFShort()
         yaw = channel.readByte()
         pitch = channel.readByte()
     }

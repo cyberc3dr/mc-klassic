@@ -2,11 +2,7 @@ package ru.sliva.mcklassic
 
 import io.ktor.network.sockets.*
 import io.ktor.utils.io.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
 import ru.sliva.mcklassic.protocol.*
-import kotlin.time.Duration.Companion.seconds
 
 class Connection(val socket: Socket) {
 

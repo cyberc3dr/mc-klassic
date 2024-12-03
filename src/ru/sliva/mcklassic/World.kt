@@ -1,5 +1,6 @@
 package ru.sliva.mcklassic
 
+import kotlinx.coroutines.delay
 import kotlinx.io.Buffer
 import kotlinx.io.readByteArray
 import ru.sliva.mcklassic.protocol.*
@@ -46,6 +47,8 @@ class World(val width: Int, val height: Int, val depth: Int) {
                 data = it.copyInto(ByteArray(1024))
                 percent = (index * 100 / chunks.size).toUByte()
             })
+
+            delay(500)
         }
 
         println("sent finalize packet")
