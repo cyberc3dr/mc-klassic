@@ -2,6 +2,7 @@
 kotlin = "2.1.0"
 ktor-version = "3.0.1"
 configurate = "4.1.2"
+korge = "5.4.0"
 
 [libraries]
 configurate-yaml = { module = "org.spongepowered:configurate-yaml", version.ref = "configurate" }
@@ -10,6 +11,8 @@ kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0"
 
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor-version" }
 ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor-version" }
+
+korge-core = { module = "com.soywiz.korge:korge-core", version.ref = "korge" }
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

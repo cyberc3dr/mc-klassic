@@ -18,6 +18,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines)
     implementation(libs.ktor.server.core)
     implementation(libs.ktor.server.netty)
+    implementation(libs.korge.core)
 }
 
 tasks.withType<JavaCompile> {

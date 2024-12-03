@@ -1,5 +1,7 @@
 package ru.sliva.mcklassic
 
+import korlibs.io.compression.compress
+import korlibs.io.compression.deflate.GZIP
 import kotlinx.coroutines.delay
 import kotlinx.io.Buffer
 import kotlinx.io.readByteArray
@@ -37,7 +39,7 @@ class World(val width: Int, val height: Int, val depth: Int) {
     suspend fun sendWorld(connection: Connection) {
         connection.sendPacket(LevelInitialize())
 
-        val chunks = serialize().gzipped()
+        val chunks = serialize().compress(GZIP)
 
         chunks.chunked(1024).forEachIndexed { index, it ->
             connection.sendPacket(LevelDataChunk().apply {
